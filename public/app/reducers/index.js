@@ -1,8 +1,9 @@
-import { combineReducers } from 'redux'
-import counter from './counter'
+//noinspection JSUnresolvedVariable
+import {combineReducers} from 'redux'
+import {media} from './media'
 
-const rootReducer = combineReducers({
-  counter
-});
+const reducer = combineReducers({
+  media
+})
 
-export default rootReducer
+export default reducer

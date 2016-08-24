@@ -55,6 +55,7 @@ public class Application extends Controller {
 
         json.putArray("results").addAll(arr);
 
-        return ok(json);
+        //return ok(json);
+        return notFound();
     }
 }

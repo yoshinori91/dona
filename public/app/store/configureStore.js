@@ -1,11 +1,11 @@
-import { createStore } from 'redux'
-import rootReducer from '../reducers'
+import  {createStore, applyMiddleware} from 'redux'
+import logger from 'redux-logger'
+import reducer from '../reducers'
+
+const crateSToreWithMiddleware = applyMiddleware(
+  logger()
+)(createStore)
 
 export default function configureStore(initialState) {
-  const store = createStore(
-      rootReducer,
-      initialState
-  );
-
-  return store
+  return crateSToreWithMiddleware(reducer, initialState)
 }
