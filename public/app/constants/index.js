@@ -1,1 +1,0 @@
-export const MEDIA_POST = 'MEDIA_POST'
