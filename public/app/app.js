@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import {Provider, connect} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Button from 'react-bootstrap/lib/Button';
 import Navigation from './components/Navigation'
-import Media from './containers/Media'
+import MediaPage, {mediaPageReducer} from './containers/MediaPage'
 
 import {Link, hashHistory, browserHistory, Route, Router} from 'react-router'
 
@@ -14,9 +14,7 @@ injectTapEventPlugin();
 
 /* Storeの実装 */
 
-const initialState = {
-  value: null,
-};
+const initialState = {};
 
 // middleware
 const debug = function actionDebugMiddleware() {
@@ -28,7 +26,7 @@ const debug = function actionDebugMiddleware() {
 
 // applyMiddlewareに指定
 const finalCreateStore = applyMiddleware(debug)(createStore);
-const store = finalCreateStore(formReducer, initialState);
+const store = finalCreateStore(mediaPageReducer, initialState);
 
 /* Actionsの実装 */
 
@@ -44,23 +42,9 @@ function send(value) {
   };
 }
 
-/* Reducersの実装 */
-
-function formReducer(state, action) {
-  switch (action.type) {
-    case 'SEND':
-      return Object.assign({}, state, {
-        value: action.value,
-      });
-    default:
-      return state;
-  }
-}
-
 /* Viwの実装 */
 // Veiw (Container Components)
-class FormApp extends React
-  .Component {
+class FormApp extends React.Component {
   render() {
     return (
       <div>
@@ -82,17 +66,12 @@ FormApp.propTypes = {
 
 // Veiw (Presentational Components)
 class FormInput extends React.Component {
-  send(e) {
-    e.preventDefault();
-    this.props.handleClick(this.myInput.value.trim());
-    this.myInput.value = '';
-  }
-
+ 
   render() {
     return (
       <form>
         <input type="text" ref={(ref) => (this.myInput = ref)} defaultValue=""/>
-        <Button bsStyle="primary" onClick={(event) => this.send(event)} label="Default">Send</Button>
+        <Button bsStyle="primary" onClick={() => this.props.handleClick()} label="Default">Send</Button>
       </form>
     );
   }
@@ -123,33 +102,6 @@ class HogeA extends React.Component {
     )
   }
 }
-var HogeB = React.createClass({
-
-  componentDidMount: function () {
-    console.log('componentDidMount')
-    console.log(this.props)
-    $.ajax({
-      url: '/media',
-      dataType: 'json',
-      cache: false,
-      success: function (data) {
-        console.log(data)
-        this.setState({data: data.results})
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(this.props.url, status, err.toString())
-      }.bind(this)
-    })
-  },
-  render: function () {
-    return (
-      <div>
-        <Navigation />
-        Show Hoge
-      </div>
-    )
-  }
-})
 
 // Connect to Redux
 function mapStateToProps(state) {
@@ -175,8 +127,9 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" components={App}/>
+      <Route path="/test" components={FormApp}/>
       <Route path="/media" components={HogeA}/>
-      <Route path="/mediaa" components={HogeB}/>
+      <Route path="/mediaa" components={MediaPage}/>
     </Router>
   </Provider>
   ,

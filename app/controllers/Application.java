@@ -24,14 +24,21 @@ public class Application extends Controller {
         ArrayNode arr = json.arrayNode();
         ObjectNode element1 = Json.newObject();
         element1.put("id", 123);
-        element1.put("author", "negishi");
-        element1.put("text", "pool");
+        element1.put("media", "media11");
+        element1.put("frame", "frame1");
+        element1.put("dist", "dist1");
+        element1.put("size", "size1");
+        element1.put("position", "position1");
+        element1.put("indication", "indication1");
         arr.add(element1);
 
         ObjectNode element2 = Json.newObject();
-        element2.put("id", 124);
-        element2.put("author", "yoshinori");
-        element2.put("text", "poooooool");
+        element2.put("id", 456);
+        element2.put("media", "media2");
+        element2.put("frame", "frame2");
+        element2.put("dist", "dist2");
+        element2.put("size", "size2");
+        element2.put("position", "position2");
         arr.add(element2);
 
         json.putArray("results").addAll(arr);
