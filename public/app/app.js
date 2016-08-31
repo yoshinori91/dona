@@ -5,7 +5,9 @@ import {Provider, connect} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Button from 'react-bootstrap/lib/Button';
 import Navigation from './components/Navigation'
+import Media from './containers/Media'
 
+import {Link, hashHistory, browserHistory, Route, Router} from 'react-router'
 
 // remove Unknown props 'onTouchProp'
 injectTapEventPlugin();
@@ -64,6 +66,10 @@ class FormApp extends React
       <div>
         <FormInput handleClick={this.props.onClick}/>
         <FormDisplay data={this.props.value}/>
+        <ul>
+          <li><Link to="media">index</Link></li>
+          <li><Link to="mediaa">index</Link></li>
+        </ul>
         <Navigation />
       </div>
     );
@@ -108,6 +114,42 @@ FormDisplay.propTypes = {
   data: React.PropTypes.string,
 };
 
+class HogeA extends React.Component {
+  render() {
+    return (
+      <div>
+        Show HogeA
+      </div>
+    )
+  }
+}
+var HogeB = React.createClass({
+
+  componentDidMount: function () {
+    console.log('componentDidMount')
+    console.log(this.props)
+    $.ajax({
+      url: '/media',
+      dataType: 'json',
+      cache: false,
+      success: function (data) {
+        console.log(data)
+        this.setState({data: data.results})
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString())
+      }.bind(this)
+    })
+  },
+  render: function () {
+    return (
+      <div>
+        <Navigation />
+        Show Hoge
+      </div>
+    )
+  }
+})
 
 // Connect to Redux
 function mapStateToProps(state) {
@@ -122,7 +164,7 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
-const AppContainer = connect(
+const App = connect(
   mapStateToProps,
   mapDispatchToProps
 )(FormApp);
@@ -131,7 +173,12 @@ const AppContainer = connect(
 // Rendering
 ReactDOM.render(
   <Provider store={store}>
-    <AppContainer />
-  </Provider>,
+    <Router history={hashHistory}>
+      <Route path="/" components={App}/>
+      <Route path="/media" components={HogeA}/>
+      <Route path="/mediaa" components={HogeB}/>
+    </Router>
+  </Provider>
+  ,
   document.getElementById('app-component')
 );

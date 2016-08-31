@@ -18,6 +18,7 @@ public class Application extends Controller {
     }
 
     public static Result mediaIndex() {
+        System.out.println("mediaIndex : ");
 
         ObjectNode json = Json.newObject();
         ArrayNode arr = json.arrayNode();
