@@ -8189,11 +8189,11 @@
 
 	var _MediaPage2 = _interopRequireDefault(_MediaPage);
 
-	var _configureStore = __webpack_require__(742);
+	var _configureStore = __webpack_require__(743);
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
-	var _mediaPage = __webpack_require__(758);
+	var _mediaPage = __webpack_require__(759);
 
 	var _mediaPage2 = _interopRequireDefault(_mediaPage);
 
@@ -42812,6 +42812,8 @@
 
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 
+	var _api = __webpack_require__(742);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42834,21 +42836,7 @@
 	  _createClass(MediaPage, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      console.log('media page ajax');
-	      $.ajax({
-	        url: '/media',
-	        dataType: 'json',
-	        cache: false,
-	        success: function (data) {
-	          // this.setState({data: data.results})
-	          console.log(data);
-	          jsonData.data = data.results;
-	          console.log(jsonData);
-	        }.bind(this),
-	        error: function (xhr, status, err) {
-	          console.error(this.props.url, status, err.toString());
-	        }.bind(this)
-	      });
+	      (0, _api.callApi)("/media");
 	    }
 	  }, {
 	    key: 'send',
@@ -42863,8 +42851,6 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        this.props.hoge,
-	        this.props.bar,
 	        _react2.default.createElement(_Navigation2.default, null),
 	        'Media Page',
 	        _react2.default.createElement(
@@ -42901,6 +42887,7 @@
 	            'Position'
 	          )
 	        ),
+	        this.props.hoge,
 	        _react2.default.createElement(
 	          'button',
 	          { onClick: function onClick() {
@@ -42917,16 +42904,14 @@
 
 	MediaPage.propTypes = {
 	  hoge: _react2.default.PropTypes.string,
-	  bar: _react2.default.PropTypes.string,
 	  handleClick2: _react2.default.PropTypes.func.isRequired
 	};
 
 	// Connect to Redux
 	function mapStateToProps(state) {
-	  console.log('called mapStateToProps');
+	  console.log('called mapStateToProps : ' + state.hoge);
 	  return {
-	    hoge: state.hoge,
-	    bar: state.mediaPageReducer.hoge
+	    hoge: state.mediaPageReducer.hoge
 	  };
 	}
 
@@ -66878,6 +66863,26 @@
 
 /***/ },
 /* 742 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.callApi = callApi;
+	function callApi(url) {
+	  fetch("/media").then(function (response) {
+	    return response.json();
+	  }).then(function (data) {
+	    return console.log(data);
+	  }).catch(function (e) {
+	    return console.log(e);
+	  });
+	}
+
+/***/ },
+/* 743 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66889,15 +66894,15 @@
 
 	var _redux = __webpack_require__(476);
 
-	var _reduxLogger = __webpack_require__(743);
+	var _reduxLogger = __webpack_require__(744);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-	var _reduxSaga = __webpack_require__(744);
+	var _reduxSaga = __webpack_require__(745);
 
 	var _reduxSaga2 = _interopRequireDefault(_reduxSaga);
 
-	var _reducers = __webpack_require__(756);
+	var _reducers = __webpack_require__(757);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -66913,7 +66918,7 @@
 	}
 
 /***/ },
-/* 743 */
+/* 744 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -67146,7 +67151,7 @@
 	module.exports = createLogger;
 
 /***/ },
-/* 744 */
+/* 745 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67156,7 +67161,7 @@
 	});
 	exports.utils = exports.effects = exports.CANCEL = exports.delay = exports.takeLatest = exports.takeEvery = exports.buffers = exports.channel = exports.eventChannel = exports.END = exports.runSaga = undefined;
 
-	var _runSaga = __webpack_require__(745);
+	var _runSaga = __webpack_require__(746);
 
 	Object.defineProperty(exports, 'runSaga', {
 	  enumerable: true,
@@ -67165,7 +67170,7 @@
 	  }
 	});
 
-	var _channel = __webpack_require__(750);
+	var _channel = __webpack_require__(751);
 
 	Object.defineProperty(exports, 'END', {
 	  enumerable: true,
@@ -67186,7 +67191,7 @@
 	  }
 	});
 
-	var _buffers = __webpack_require__(751);
+	var _buffers = __webpack_require__(752);
 
 	Object.defineProperty(exports, 'buffers', {
 	  enumerable: true,
@@ -67195,7 +67200,7 @@
 	  }
 	});
 
-	var _sagaHelpers = __webpack_require__(752);
+	var _sagaHelpers = __webpack_require__(753);
 
 	Object.defineProperty(exports, 'takeEvery', {
 	  enumerable: true,
@@ -67210,7 +67215,7 @@
 	  }
 	});
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
 	Object.defineProperty(exports, 'delay', {
 	  enumerable: true,
@@ -67225,15 +67230,15 @@
 	  }
 	});
 
-	var _middleware = __webpack_require__(753);
+	var _middleware = __webpack_require__(754);
 
 	var _middleware2 = _interopRequireDefault(_middleware);
 
-	var _effects = __webpack_require__(754);
+	var _effects = __webpack_require__(755);
 
 	var effects = _interopRequireWildcard(_effects);
 
-	var _utils2 = __webpack_require__(755);
+	var _utils2 = __webpack_require__(756);
 
 	var utils = _interopRequireWildcard(_utils2);
 
@@ -67246,7 +67251,7 @@
 	exports.utils = utils;
 
 /***/ },
-/* 745 */
+/* 746 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -67256,9 +67261,9 @@
 	});
 	exports.runSaga = runSaga;
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
-	var _proc = __webpack_require__(747);
+	var _proc = __webpack_require__(748);
 
 	var _proc2 = _interopRequireDefault(_proc);
 
@@ -67278,7 +67283,7 @@
 	}
 
 /***/ },
-/* 746 */
+/* 747 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -67480,7 +67485,7 @@
 	};
 
 /***/ },
-/* 747 */
+/* 748 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -67491,17 +67496,17 @@
 	exports.TASK_CANCEL = exports.CHANNEL_END = exports.NOT_ITERATOR_ERROR = undefined;
 	exports.default = proc;
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
-	var _asap = __webpack_require__(748);
+	var _asap = __webpack_require__(749);
 
 	var _asap2 = _interopRequireDefault(_asap);
 
-	var _io = __webpack_require__(749);
+	var _io = __webpack_require__(750);
 
-	var _channel = __webpack_require__(750);
+	var _channel = __webpack_require__(751);
 
-	var _buffers = __webpack_require__(751);
+	var _buffers = __webpack_require__(752);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68192,7 +68197,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 748 */
+/* 749 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -68226,7 +68231,7 @@
 	};
 
 /***/ },
-/* 749 */
+/* 750 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68253,7 +68258,7 @@
 	exports.actionChannel = actionChannel;
 	exports.cancelled = cancelled;
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -68480,7 +68485,7 @@
 	};
 
 /***/ },
-/* 750 */
+/* 751 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -68493,9 +68498,9 @@
 	exports.channel = channel;
 	exports.eventChannel = eventChannel;
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
-	var _buffers = __webpack_require__(751);
+	var _buffers = __webpack_require__(752);
 
 	var CHANNEL_END_TYPE = '@@redux-saga/CHANNEL_END';
 	var END = exports.END = { type: CHANNEL_END_TYPE };
@@ -68652,7 +68657,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 751 */
+/* 752 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68662,7 +68667,7 @@
 	});
 	exports.buffers = exports.BUFFER_OVERFLOW = undefined;
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
 	var BUFFER_OVERFLOW = exports.BUFFER_OVERFLOW = 'Channel\'s Buffer overflow!';
 
@@ -68731,7 +68736,7 @@
 	};
 
 /***/ },
-/* 752 */
+/* 753 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68745,11 +68750,11 @@
 	exports.takeEvery = takeEvery;
 	exports.takeLatest = takeLatest;
 
-	var _channel = __webpack_require__(750);
+	var _channel = __webpack_require__(751);
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
-	var _io = __webpack_require__(749);
+	var _io = __webpack_require__(750);
 
 	var done = { done: true, value: undefined };
 	var qEnd = {};
@@ -68861,7 +68866,7 @@
 	}
 
 /***/ },
-/* 753 */
+/* 754 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -68871,13 +68876,13 @@
 	});
 	exports.default = sagaMiddlewareFactory;
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
-	var _proc = __webpack_require__(747);
+	var _proc = __webpack_require__(748);
 
 	var _proc2 = _interopRequireDefault(_proc);
 
-	var _channel = __webpack_require__(750);
+	var _channel = __webpack_require__(751);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68937,7 +68942,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(294)))
 
 /***/ },
-/* 754 */
+/* 755 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -68946,7 +68951,7 @@
 	  value: true
 	});
 
-	var _io = __webpack_require__(749);
+	var _io = __webpack_require__(750);
 
 	Object.defineProperty(exports, 'take', {
 	  enumerable: true,
@@ -69034,7 +69039,7 @@
 	});
 
 /***/ },
-/* 755 */
+/* 756 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69043,7 +69048,7 @@
 	  value: true
 	});
 
-	var _utils = __webpack_require__(746);
+	var _utils = __webpack_require__(747);
 
 	Object.defineProperty(exports, 'TASK', {
 	  enumerable: true,
@@ -69082,7 +69087,7 @@
 	  }
 	});
 
-	var _io = __webpack_require__(749);
+	var _io = __webpack_require__(750);
 
 	Object.defineProperty(exports, 'asEffect', {
 	  enumerable: true,
@@ -69092,7 +69097,7 @@
 	});
 
 /***/ },
-/* 756 */
+/* 757 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69103,7 +69108,7 @@
 
 	var _redux = __webpack_require__(476);
 
-	var _mediaPage = __webpack_require__(757);
+	var _mediaPage = __webpack_require__(758);
 
 	var _mediaPage2 = _interopRequireDefault(_mediaPage);
 
@@ -69116,14 +69121,17 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 757 */
-/***/ function(module, exports) {
+/* 758 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _api = __webpack_require__(742);
+
 	function mediaPageReducer() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
@@ -69134,6 +69142,7 @@
 	      console.log('FETCH_MEDIA_DATA');
 	      return state.set('something', 'somethingA');
 	    case 'INCREMENT':
+	      //callApi("media")
 	      return {
 	        hoge: 'from saga'
 	      };
@@ -69145,7 +69154,7 @@
 	exports.default = mediaPageReducer;
 
 /***/ },
-/* 758 */
+/* 759 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -69156,9 +69165,9 @@
 	exports.incrementAsync = incrementAsync;
 	exports.default = rootSaga;
 
-	var _reduxSaga = __webpack_require__(744);
+	var _reduxSaga = __webpack_require__(745);
 
-	var _effects = __webpack_require__(759);
+	var _effects = __webpack_require__(760);
 
 	var _marked = [incrementAsync, rootSaga].map(regeneratorRuntime.mark);
 
@@ -69205,10 +69214,10 @@
 	}
 
 /***/ },
-/* 759 */
+/* 760 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(754)
+	module.exports = __webpack_require__(755)
 
 /***/ }
 /******/ ]);

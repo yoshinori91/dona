@@ -1,3 +1,5 @@
+import {callApi} from '../services/api'
+
 function mediaPageReducer(state = {}, action) {
   console.log('2 mediaPageReducer')
   switch (action.type) {
@@ -5,6 +7,7 @@ function mediaPageReducer(state = {}, action) {
       console.log('FETCH_MEDIA_DATA')
       return state.set('something', 'somethingA')
     case 'INCREMENT':
+      //callApi("media")
       return {
         hoge: 'from saga'
       }

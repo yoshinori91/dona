@@ -4,27 +4,14 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 
 import {sagaData} from '../actions/mediaPage'
 import Navigation from '../components/Navigation'
+import {callApi} from '../services/api'
 
 const jsonData = {data: []}
 
 export class MediaPage extends React.Component {
 
   componentDidMount() {
-    console.log('media page ajax')
-    $.ajax({
-      url: '/media',
-      dataType: 'json',
-      cache: false,
-      success: function (data) {
-        // this.setState({data: data.results})
-        console.log(data)
-        jsonData.data = data.results
-        console.log(jsonData)
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(this.props.url, status, err.toString())
-      }.bind(this)
-    })
+    callApi("/media")
   }
 
   send(e) {
@@ -46,7 +33,6 @@ export class MediaPage extends React.Component {
         </BootstrapTable>
         {this.props.hoge}
         <button onClick={() => this.props.handleClick2()}>Button</button>
-        {this.props.bar}
       </div>
     )
   }
@@ -54,16 +40,14 @@ export class MediaPage extends React.Component {
 
 MediaPage.propTypes = {
   hoge: React.PropTypes.string,
-  bar: React.PropTypes.string,
   handleClick2: React.PropTypes.func.isRequired,
 }
 
 // Connect to Redux
 function mapStateToProps(state) {
-  console.log('called mapStateToProps')
+  console.log('called mapStateToProps : ' + state.hoge)
   return {
-    hoge: state.hoge,
-    bar: state.mediaPageReducer.hoge
+    hoge: state.mediaPageReducer.hoge,
   }
 }
 
