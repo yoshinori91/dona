@@ -2,27 +2,10 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table'
 
-import fetchMediaData from './actions'
-import {FETCH_MEDIA_DATA} from './constans'
-import Navigation from '../../components/Navigation'
+import {sagaData} from '../actions/mediaPage'
+import Navigation from '../components/Navigation'
 
 const jsonData = {data: []}
-
-export function mediaPageReducer(state, action) {
-  console.log('mediaPageReducer 33')
-  console.log(state)
-  switch (action.type) {
-    case FETCH_MEDIA_DATA:
-      console.log(' -> fetch')
-      return Object.assign({}, state, {
-        value: 'hogehoge'
-      })
-      return state('something', 'somethingA')
-    default:
-      console.log(' -> default')
-      return state
-  }
-}
 
 export class MediaPage extends React.Component {
 
@@ -61,25 +44,33 @@ export class MediaPage extends React.Component {
           <TableHeaderColumn dataField="size">Size</TableHeaderColumn>
           <TableHeaderColumn dataField="position">Position</TableHeaderColumn>
         </BootstrapTable>
-        <button onClick={() => this.props.handleClick2()}>{this.props.value}</button>
+        {this.props.hoge}
+        <button onClick={() => this.props.handleClick2()}>Button</button>
+        {this.props.bar}
       </div>
     )
   }
 }
 
 MediaPage.propTypes = {
+  hoge: React.PropTypes.string,
+  bar: React.PropTypes.string,
   handleClick2: React.PropTypes.func.isRequired,
 }
 
 // Connect to Redux
 function mapStateToProps(state) {
-  return state
+  console.log('called mapStateToProps')
+  return {
+    hoge: state.hoge,
+    bar: state.mediaPageReducer.hoge
+  }
 }
 
 function mapDispatchToState(dispatch) {
   console.log('mapDispatch')
   return {
-    handleClick2: () => dispatch(fetchMediaData())
+    handleClick2: () => dispatch(sagaData())
   }
 }
 

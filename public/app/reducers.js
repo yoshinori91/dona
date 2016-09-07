@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import mediaPageReducer from './containers/MediaPage/reducer'
+import mediaPageReducer from './reducers/mediaPage'
 
-export default function createReducer() {
-  return combineReducers({
-    mediaPage: mediaPageReducer,
-  });
-}
+const rootReducer = combineReducers({
+  mediaPageReducer,
+})
+
+export default rootReducer
